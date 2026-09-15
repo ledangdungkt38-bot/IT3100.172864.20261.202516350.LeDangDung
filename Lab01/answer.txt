@@ -1,0 +1,4 @@
+Exercise 4.1:
+- The value printed for roundedCost is: 19.
+- It is truncated, not rounded to the nearest integer.
+- Reason: In Java, explicit narrowing primitive conversion (casting double to int) simply discards the fractional part (digits after decimal point) rather than applying mathematical rounding rules.
