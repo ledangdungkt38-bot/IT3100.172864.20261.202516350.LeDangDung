@@ -17,4 +17,4 @@ public class MaxMinDiscount {
         System.out.println("Min: " + title[minIdx] + " - " + cost[minIdx]);
         System.out.println("Total after discount: " + total);
     }
-}
+}	
