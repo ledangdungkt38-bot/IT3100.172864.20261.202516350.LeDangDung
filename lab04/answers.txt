@@ -1,0 +1,42 @@
+======================================================================
+MỤC 9.1: SO SÁNH PHIÊN BẢN MẢNG (ARRAY) VÀ VARARGS
+======================================================================
+Câu hỏi:
+So sánh phiên bản varargs với phiên bản mảng. Bạn thích cách tiếp cận nào hơn trong trường hợp này, và tại sao?
+
+Trả lời:
+1. So sánh:
+   - Phiên bản mảng (Array): Phía gọi hàm (caller) bắt buộc phải chủ động tạo và gán giá trị cho một đối tượng mảng trước khi truyền vào phương thức (ví dụ: addDigitalVideoDisc(new DigitalVideoDisc[]{dvd1, dvd2})).
+   - Phiên bản Varargs (Variable Arguments): Cú pháp linh hoạt hơn rất nhiều. Người dùng có thể truyền trực tiếp danh sách các đối số ngăn cách nhau bởi dấu phẩy (ví dụ: addDigitalVideoDisc(dvd1, dvd2, dvd3)) hoặc truyền nguyên một mảng có sẵn vào đều được.
+
+2. Lựa chọn:
+   Em ưu tiên phiên bản Varargs. Lý do là varargs giúp mã nguồn ở nơi gọi hàm ngắn gọn, trực quan, không phải mất công bọc các đối tượng vào một mảng thủ công, đồng thời vẫn tương thích hoàn toàn nếu truyền mảng vào.
+
+
+======================================================================
+MỤC 10: CƠ CHẾ TRUYỀN THAM SỐ TRONG JAVA (PASS-BY-VALUE)
+======================================================================
+Câu hỏi 1:
+Java là ngôn ngữ truyền theo giá trị (pass by value) hay truyền theo tham chiếu (pass by reference)?
+
+Trả lời:
+Java hoàn toàn và duy nhất là ngôn ngữ TRUYỀN THEO GIÁ TRỊ (PASS-BY-VALUE). 
+Khi truyền một biến đối tượng vào hàm, Java không hề truyền bản thân đối tượng hay địa chỉ tham chiếu gốc, mà sẽ tạo ra một bản sao giá trị của biến tham chiếu đó (bản sao địa chỉ ô nhớ) đưa vào phương thức.
+
+---
+
+Câu hỏi 2:
+Sau lời gọi swap(jungleDVD, cinderellaDVD), tại sao tiêu đề (title) của hai đối tượng này vẫn giữ nguyên không đổi?
+
+Trả lời:
+Bởi vì khi hàm swap được gọi, Java tạo ra 2 biến cục bộ mới (o1 và o2) lưu bản sao địa chỉ của jungleDVD và cinderellaDVD. Phép hoán đổi `Object tmp = o1; o1 = o2; o2 = tmp;` chỉ làm tráo đổi giá trị của hai biến cục bộ o1 và o2 nằm trong stack của hàm swap. Phép gán này hoàn toàn không làm thay đổi hai biến tham chiếu gốc jungleDVD và cinderellaDVD ở hàm main, nên hai đối tượng ngoài hàm main vẫn giữ nguyên.
+
+---
+
+Câu hỏi 3:
+Sau lời gọi changeTitle(jungleDVD, cinderellaDVD.getTitle()), tại sao tiêu đề của jungleDVD lại bị thay đổi?
+
+Trả lời:
+Biến tham số cục bộ 'dvd' trong hàm changeTitle nhận bản sao địa chỉ tham chiếu trỏ cùng tới ô nhớ của đối tượng jungleDVD trên vùng nhớ Heap. 
+- Khi gọi `dvd.setTitle(title)`, phương thức này đã truy xuất trực tiếp vào đối tượng gốc đó và thay đổi thuộc tính 'title' bên trong nó, do đó đối tượng gốc bị biến đổi.
+- Dòng lệnh tiếp theo `dvd = new DigitalVideoDisc(oldTitle)` chỉ gán lại biến cục bộ 'dvd' sang trỏ tới một đối tượng mới khác, hoàn toàn không làm ảnh hưởng đến biến tham chiếu jungleDVD ở bên ngoài main. Vì vậy, sự thay đổi tiêu đề từ lệnh setTitle trước đó vẫn tồn tại.
